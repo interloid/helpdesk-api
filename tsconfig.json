@@ -1,52 +1,38 @@
 {
-  // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
-    // File Layout
+    // File layout
     "rootDir": "./src",
     "outDir": "./dist",
-    "moduleResolution": "nodenext",
 
-    // Environment Settings
-    // See also https://aka.ms/tsconfig/module
+    // Environment (Node 26, native ESM)
     "module": "nodenext",
+    "moduleResolution": "nodenext",
     "target": "es2023",
-    // "types": [],
-    // For nodejs:
-    // "lib": ["esnext"],
     "types": ["node"],
-    // and npm install -D @types/node
-
-    // Other Outputs
     "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
 
-    // Stricter Typechecking Options
+    // Type checking
+    "strict": true,
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
+    "noImplicitReturns": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
 
-    // Style Options
-    // "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "noPropertyAccessFromIndexSignature": true,
-
-    //TypeORM Class Validator
+    // TypeORM / class-validator (legacy decorators + reflect-metadata)
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
+    // Emit plain property assignments instead of own-property class fields,
+    // so fields don't shadow accessors that decorators define on the prototype.
+    "useDefineForClassFields": false,
     "strictPropertyInitialization": false,
 
-    "skipLibCheck": true,
-
-    // Recommended Options
-    "strict": true,
+    // Module hygiene
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
+    "skipLibCheck": true
   },
   "include": ["src"]
 }

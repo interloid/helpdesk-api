@@ -2,18 +2,18 @@
   "name": "helpdesk-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/server.js",
   "engines": {
     "node": ">=26"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
-    "dev": "tsc && concurrently -k -n tsc,api \"tsc -w --preserveWatchOutput\" \"node --watch dist/server.js\"",
-    "start": "node dist/server.js",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "dev": "npm run build && concurrently -k -n tsc,api \"tsc -p tsconfig.build.json -w --preserveWatchOutput\" \"node --env-file-if-exists=.env --watch dist/server.js\"",
+    "start": "node --env-file-if-exists=.env dist/server.js",
     "typecheck": "tsc --noEmit",
     "db:generate": "npm run build && typeorm migration:generate -d dist/database/data-source.js",
     "db:run": "npm run build && typeorm migration:run -d dist/database/data-source.js",
-    "db:revert": "typeorm migration:revert -d dist/database/data-source.js",
+    "db:revert": "npm run build && typeorm migration:revert -d dist/database/data-source.js",
     "db:seed": "npm run build && node dist/database/seed.js",
     "test": "NODE_ENV=test LOG_LEVEL=silent vitest run"
   },
@@ -24,8 +24,8 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
     "cors": "^2.8.6",
-    "dotenv": "^18.0.9",
     "express": "^5.3.0",
+    "express-rate-limit": "^8.7.3",
     "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.1",
@@ -48,8 +48,11 @@
     "concurrently": "^10.0.6",
     "pino-pretty": "^13.2.0",
     "supertest": "^7.3.1",
-    "ts-node": "^10.9.2",
-    "typescript": "^7.0.2",
+    "typescript": "7.0.2",
     "vitest": "^5.1.0"
+  },
+  "private": true,
+  "overrides": {
+    "glob": "^14.0.3"
   }
 }
