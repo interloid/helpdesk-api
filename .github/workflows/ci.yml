@@ -13,7 +13,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
+  audit-and-test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
 
